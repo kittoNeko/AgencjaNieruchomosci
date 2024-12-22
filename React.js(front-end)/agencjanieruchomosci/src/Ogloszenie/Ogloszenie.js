@@ -4,6 +4,7 @@ const Ogloszenie = (props) => {
     // Accessing props directly
     return(
         <div className='Ogloszenie'>
+            <p>{props.klucz}</p>
             <h2>{props.Tytul}</h2>
             <p>{props.Opis}</p>
             <p>Ulica: {props.Ulica}</p>
