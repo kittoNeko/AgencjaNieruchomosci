@@ -3,6 +3,8 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Ogloszenia from './Ogloszenie/Ogloszenia';
 import OgloszenieDetails from './Ogloszenie/OgloszenieDetails';
+import Navbar from './Navbar';
+import DodajOgloszenie from './Ogloszenie/DodajOgloszenie';
 
 class App extends Component {
   state = {
@@ -10,11 +12,10 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // Make GET request
     axios.get('https://localhost:7093/api/Ogloszenia')
       .then(response => {
         console.log(response);
-        this.setState({ ogloszeniaList: response.data }); // Set state with the fetched data
+        this.setState({ ogloszeniaList: response.data });
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -25,17 +26,11 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <Navbar />
           <Routes>
-            {/* Strona główna */}
-            <Route 
-              path="/" 
-              element={<Ogloszenia Ogloszenia={this.state.ogloszeniaList} />} 
-            />
-            {/* Detale */}
-            <Route 
-              path="/ogloszenie/:id" 
-              element={<OgloszenieDetails />} 
-            />
+            <Route path="/" element={<Ogloszenia Ogloszenia={this.state.ogloszeniaList} />} />
+            <Route path="/ogloszenie/:id" element={<OgloszenieDetails />} />
+            <Route path='/dodawanie' element={<DodajOgloszenie/>}/>
           </Routes>
         </div>
       </Router>

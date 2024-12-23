@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AgencjaNieruchomosci.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AgencjaNieruchomosci.Models;
 
 namespace AgencjaNieruchomosci.Controllers
 {
@@ -42,7 +37,6 @@ namespace AgencjaNieruchomosci.Controllers
         }
 
         // PUT: api/Ogloszenia/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOgloszenie(int id, Ogloszenie ogloszenie)
         {
@@ -72,17 +66,50 @@ namespace AgencjaNieruchomosci.Controllers
             return NoContent();
         }
 
-        // POST: api/Ogloszenia
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Ogloszenie>> PostOgloszenie(Ogloszenie ogloszenie)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<Ogloszenie>> PostOgloszenie(
+    [FromForm] string tytul,
+    [FromForm] string opis,
+    [FromForm] string ulica,
+    [FromForm] float cena,
+    [FromForm] List<IFormFile> zdjecia)
         {
+            // Handle the uploaded form data
+            var ogloszenie = new Ogloszenie
+            {
+                Tytuł = tytul,
+                Opis = opis,
+                Ulica = ulica,
+                Cena = cena,
+                Zdjecia = new List<string>() // This assumes your Ogloszenie model has a property for image URLs
+            };
+
+            // Process the files
+            foreach (var file in zdjecia)
+            {
+                // Define the path where the image will be saved within the wwwroot/Zdjecia folder
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Zdjecia", file.FileName);
+
+                // Ensure the directory exists
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Zdjecia"));
+
+                // Save the file to the specified path
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Optionally save the file path or URL to the database
+                ogloszenie.Zdjecia.Add($"{file.FileName}"); // Save the relative path for access
+            }
+
+            // Add the ogloszenie to the database
             _context.Ogloszenia.Add(ogloszenie);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOgloszenie", new { id = ogloszenie.ID }, ogloszenie);
         }
-
         // DELETE: api/Ogloszenia/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOgloszenie(int id)
