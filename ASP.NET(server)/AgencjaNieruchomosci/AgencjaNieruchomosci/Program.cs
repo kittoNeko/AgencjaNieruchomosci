@@ -4,22 +4,20 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddDbContext<ContextOgloszenia>(options =>
     options.UseSqlite("Data Source=ogloszenia.db"));
-
 builder.Services.AddControllers();
 
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Enable CORS to allow requests from localhost:3002 (your React app)
+// Enable CORS to allow requests from localhost:3000 (your React app)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", policy =>
     {
-        policy.WithOrigins("http://localhost:3002")  // React app URL
+        policy.WithOrigins("http://localhost:3000")  // React app URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -27,16 +25,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Apply pending migrations at startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ContextOgloszenia>();
+    dbContext.Database.Migrate(); // Apply migrations
+}
+
 // Configure the HTTP request pipeline.
-
-// Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
-
-// Enable middleware to serve Swagger UI (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-    c.RoutePrefix = "swagger"; // This makes Swagger UI available at the root URL (e.g., http://localhost:5000/)
+    c.RoutePrefix = "swagger"; // This makes Swagger UI available at /swagger
 });
 
 // Use CORS policy

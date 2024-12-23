@@ -19,7 +19,8 @@ namespace AgencjaNieruchomosci.Migrations
                     Tytuł = table.Column<string>(type: "TEXT", nullable: false),
                     Opis = table.Column<string>(type: "TEXT", nullable: false),
                     Ulica = table.Column<string>(type: "TEXT", nullable: false),
-                    Cena = table.Column<float>(type: "REAL", nullable: false)
+                    Cena = table.Column<float>(type: "REAL", nullable: false),
+                    Zdjecia = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

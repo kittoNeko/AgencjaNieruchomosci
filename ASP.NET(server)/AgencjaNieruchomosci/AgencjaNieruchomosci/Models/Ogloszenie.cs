@@ -7,5 +7,6 @@
         public string Opis { get; set; }
         public string Ulica { get; set; }
         public float Cena { get; set; }
+        public string[] Zdjecia { get; set; }
     }
 }

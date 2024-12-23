@@ -14,6 +14,7 @@ class Ogloszenia extends Component {
           Opis={ogloszenie.opis}
           Ulica={ogloszenie.ulica}
           Cena={ogloszenie.cena}
+          Zdjecia={ogloszenie.zdjecia}
         />
       );
     });

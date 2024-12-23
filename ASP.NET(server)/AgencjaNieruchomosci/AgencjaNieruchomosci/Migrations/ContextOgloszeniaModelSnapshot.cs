@@ -37,6 +37,10 @@ namespace AgencjaNieruchomosci.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string[]>("Zdjecia")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ID");
 
                     b.ToTable("Ogloszenia");
