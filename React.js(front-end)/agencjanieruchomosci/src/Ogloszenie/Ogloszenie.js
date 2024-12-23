@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
   
 const Ogloszenie = (props) => {
     return (
-        <div className="shadow-xl m-10 mx-auto bg-gray-200 w-4/6 p-6">
+        <div className="shadow-xl m-10 mx-auto bg-gray-300 w-4/6 p-6">
         <div className="text-center mb-6">
           <Link to={`/ogloszenie/${props.klucz}`}>
             <h2 className="font-bold text-3xl text-left">{props.Tytul}</h2>

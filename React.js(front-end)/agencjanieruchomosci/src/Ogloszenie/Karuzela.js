@@ -16,7 +16,7 @@ const Karuzela = ({ images }) => {
     };
   
     return (
-      <div className="relative w-full max-w-lg mx-auto">
+      <div className="relative w-full h-full">
         {/* Image */}
         <div className="overflow-hidden rounded-lg">
           <img
@@ -25,17 +25,15 @@ const Karuzela = ({ images }) => {
             className="w-full h-64 object-cover"
           />
         </div>
-  
-        {/* Navigation buttons */}
         <button
           onClick={prevImage}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full border-white border-2 hover:bg-opacity-75"
         >
           &#8592;
         </button>
         <button
           onClick={nextImage}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full border-white border-2 hover:bg-opacity-75"
         >
           &#8594;
         </button>
