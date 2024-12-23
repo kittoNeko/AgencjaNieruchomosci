@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Karuzela from './Karuzela';
 
 const OgloszenieDetails = () => {
     const navigate = useNavigate();
@@ -29,17 +30,7 @@ const OgloszenieDetails = () => {
         <p>{ogloszenie.opis}</p>
         <p>Ulica: {ogloszenie.ulica}</p>
         <p>Cena: {ogloszenie.cena}</p>
-        <div className="zdjecia-container">
-          {ogloszenie.zdjecia && ogloszenie.zdjecia.map((imageUrl, index) => (
-            <img 
-              key={index} 
-              src={`https://localhost:7093/Zdjecia/${imageUrl}`} 
-              alt={`Image ${index + 1}`} 
-              width="200" 
-              height="200" 
-            />
-          ))}
-        </div>
+        <Karuzela images={ogloszenie.zdjecia}/>
         <button onClick={() => navigate(-1)}>Strona Główna</button>
       </div>
     );

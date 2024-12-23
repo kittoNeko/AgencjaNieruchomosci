@@ -1,24 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+  
 const Ogloszenie = (props) => {
-    // Accessing props directly
-    return(
-        <div className='Ogloszenie'>
-            <p>{props.klucz}</p>
-            <Link to={`/ogloszenie/${props.klucz}`}>
-                <h2>{props.Tytul}</h2>
-            </Link>
-            <p>{props.Opis}</p>
-            <div className="zdjecia-container">
-                {props.Zdjecia && props.Zdjecia.slice(0, 8).map((imageUrl, index) => (
-                    <img key={index} src={`https://localhost:7093/Zdjecia/${imageUrl}`} alt={`Image ${index + 1}`} width={'200'} height={'200'}/>
-                ))}
-            </div>
-            <p>Ulica: {props.Ulica}</p>
-            <p>Cena: {props.Cena}</p>
+    return (
+        <div className="shadow-xl m-10 mx-auto bg-gray-200 w-4/6 p-6">
+        <div className="text-center mb-6">
+          <Link to={`/ogloszenie/${props.klucz}`}>
+            <h2 className="font-bold text-3xl text-left">{props.Tytul}</h2>
+          </Link>
         </div>
+        <div className="flex space-x-6">
+          <div className="w-3/6">
+            <img
+              className="w-full h-60 object-cover"
+              src={`https://localhost:7093/Zdjecia/${props.Zdjecia[0]}`}
+              alt="Ogloszenie"
+            />
+          </div>
+          <div className="w-2/3 max-h-60 overflow-hidden">
+            <p className="line-clamp-6  mb-4 text-lg">{props.Opis}</p>
+            <Link to={`/ogloszenie/${props.klucz}`}>
+                <button className='border-black border-2 p-2 rounded-md'>Zobacz więcej</button>
+            </Link>
+          </div>
+          <div className="w-1/6">
+            <p><strong>Ulica:</strong> {props.Ulica}</p>
+            <p><strong>Cena:</strong> {props.Cena}</p>
+          </div>
+        </div>
+      </div>
     );
-}
-
-export default Ogloszenie;
+  };
+  
+  export default Ogloszenie;
