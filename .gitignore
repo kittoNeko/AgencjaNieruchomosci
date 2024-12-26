@@ -418,4 +418,3 @@ dist/
 
 # Optional: Ignore specific testing libraries
 *.snap
-wwwroot/
