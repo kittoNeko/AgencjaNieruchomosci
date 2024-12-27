@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import DodajOgloszenie from './Ogloszenie/DodajOgloszenie';
 import Logowanie from './Konta/Logowanie';
 import { CookiesProvider, useCookies } from 'react-cookie';
+import AddUser from './Konta/AddUser';
 
 const App = () => {
   const [ogloszeniaList, setOgloszeniaList] = useState([]);
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/ogloszenie/:id" element={<OgloszenieDetails />} />
             <Route path='/dodawanie' element={<DodajOgloszenie />} />
             <Route path='/login' element={<Logowanie cookies={cookies}  setCookie={setCookie} />} />
+            <Route path='/adduser' element={<AddUser cookies={cookies}  setCookie={setCookie} />} />
           </Routes>
         </div>
       </Router>

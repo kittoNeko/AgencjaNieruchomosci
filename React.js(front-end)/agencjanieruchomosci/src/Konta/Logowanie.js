@@ -42,25 +42,11 @@ const Logowanie = (props) =>{
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="login" className="block text-lg">Login:</label>
-          <input
-            type="text"
-            id="login"
-            value={login}
-            onChange={(e) => setLogin(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
-            required
-          />
+          <input type="text" id="login" value={login} onChange={(e) => setLogin(e.target.value)} className="w-full px-4 py-2 border rounded-md" required/>
         </div>
         <div>
           <label htmlFor="haslo" className="block text-lg">Haslo:</label>
-          <input
-            type='text'
-            id="haslo"
-            value={haslo}
-            onChange={(e) => setHaslo(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
-            required
-          />
+          <input type='text' id="haslo" value={haslo} onChange={(e) => setHaslo(e.target.value)} className="w-full px-4 py-2 border rounded-md" required/>
         </div>
         <button type="submit" className="border-black border-2 p-2 rounded-md">Zaloguj sie</button>
       </form>

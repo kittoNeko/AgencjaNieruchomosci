@@ -36,7 +36,7 @@ const DodajOgloszenie = () => {
   };
 return(
 <div className="shadow-xl m-10 mx-auto bg-gray-200 w-4/6 p-6">
-  <h1 className="font-bold text-3xl text-center mb-6">Zaloguj sie</h1>
+  <h1 className="font-bold text-3xl text-center mb-6">Dodaj Ogłoszenie</h1>
   <form onSubmit={handleSubmit} className="space-y-4">
     <div>
       <label htmlFor="tytul" className="block text-lg">Tytul:</label>
