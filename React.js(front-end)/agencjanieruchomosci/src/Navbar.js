@@ -36,9 +36,14 @@ const Navbar = (props) => {
               </button>
               </div>
           ) : (
-            <Link to="/login" className="bg-white text-green-600 px-4 py-2 rounded-md hover:bg-gray-200 transition">
+            <div>
+            <Link to="/login" className="bg-white text-green-600 px-4 py-2 rounded-md mx-2 hover:bg-gray-200 transition">
               Zaloguj się
             </Link>
+            <Link to="/signup" className="bg-white text-green-600 px-4 py-2 mx-2 rounded-md hover:bg-gray-200 transition">
+              Zarejestruj się
+            </Link>
+            </div>
           )}
           <button onClick={toggleDropdown} className="bg-white text-green-600 px-4 py-2 rounded-md hover:bg-gray-200 transition mx-5">Menu</button>
           </div>

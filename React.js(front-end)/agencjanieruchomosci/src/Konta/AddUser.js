@@ -13,28 +13,41 @@ const AddUser = (props) => {
     if(rola==""){
       return;
     }
-    const userData = {
-      id: 0,
-      login,
-      haslo,
-      email,
-      rola: {
-        id: 0,
-        nazwa: rola,
-        pozwolenia: []
-      }
-    };
-
     try {
+      // Check if username or email already exists
+      const validationResponse = await axios.get(
+        `https://localhost:7093/api/Konta/check?login=${login}&email=${email}`
+      );
+
+      if (validationResponse.data.exists) {
+        alert("taki uzytkownik istnieje");
+        return;
+      }
+
+      const userData = {
+        id: 0,
+        login,
+        haslo,
+        email,
+        rola: {
+          id: 0,
+          nazwa: rola,
+          pozwolenia: []
+        }
+      };
+
+      // Proceed with user creation
       const response = await axios.post('https://localhost:7093/api/Konta', userData, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
+
       console.log('User added successfully:', response.data);
       navigate('/');
     } catch (error) {
-      console.error('Error adding user:', error);
+      console.error('Error:', error);
+      setError('Wystąpił błąd podczas tworzenia użytkownika.');
     }
   };
 

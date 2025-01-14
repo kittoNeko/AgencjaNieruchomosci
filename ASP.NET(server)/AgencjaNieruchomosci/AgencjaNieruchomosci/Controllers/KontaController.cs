@@ -129,5 +129,12 @@ namespace AgencjaNieruchomosci.Controllers
         {
             return _context.Konta.Any(e => e.ID == id);
         }
+
+        [HttpGet("check")]
+        public IActionResult CheckUserExists(string login, string email)
+        {
+            var userExists = _context.Konta.Any(u => u.Login == login || u.Email == email);
+            return Ok(new { exists = userExists });
+        }
     }
 }
