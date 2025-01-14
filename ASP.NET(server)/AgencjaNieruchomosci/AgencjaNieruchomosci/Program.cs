@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ContextOgloszenia>(options =>
     options.UseSqlite("Data Source=ogloszenia.db"));
+builder.Services.AddDbContext<ContextKonto>(options =>
+    options.UseSqlite("Data Source=ogloszenia.db"));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

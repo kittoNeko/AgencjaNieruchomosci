@@ -75,39 +75,28 @@ namespace AgencjaNieruchomosci.Controllers
     [FromForm] float cena,
     [FromForm] List<IFormFile> zdjecia)
         {
-            // Handle the uploaded form data
             var ogloszenie = new Ogloszenie
             {
                 Tytuł = tytul,
                 Opis = opis,
                 Ulica = ulica,
                 Cena = cena,
-                Zdjecia = new List<string>() // This assumes your Ogloszenie model has a property for image URLs
+                Zdjecia = new List<string>()
             };
-
-            // Process the files
+            var imagesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Zdjecia");
+            Directory.CreateDirectory(imagesDirectory);
             foreach (var file in zdjecia)
             {
-                // Define the path where the image will be saved within the wwwroot/Zdjecia folder
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Zdjecia", file.FileName);
-
-                // Ensure the directory exists
-                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Zdjecia"));
-
-                // Save the file to the specified path
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                var extension = Path.GetExtension(file.FileName);
+                var randomFileName = Path.Combine(imagesDirectory, $"{GenerateRandomString(64)}{extension}");
+                using (var stream = new FileStream(randomFileName, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
-
-                // Optionally save the file path or URL to the database
-                ogloszenie.Zdjecia.Add($"{file.FileName}"); // Save the relative path for access
+                ogloszenie.Zdjecia.Add($"{Path.GetFileName(randomFileName)}");
             }
-
-            // Add the ogloszenie to the database
             _context.Ogloszenia.Add(ogloszenie);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetOgloszenie", new { id = ogloszenie.ID }, ogloszenie);
         }
         // DELETE: api/Ogloszenia/5
@@ -129,6 +118,13 @@ namespace AgencjaNieruchomosci.Controllers
         private bool OgloszenieExists(int id)
         {
             return _context.Ogloszenia.Any(e => e.ID == id);
+        }
+        private string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
